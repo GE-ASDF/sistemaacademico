@@ -10,11 +10,11 @@ class connection:
             self.db_connection
         except mysql.connector.Error as error:
             if error.errno == errorcode.ER_BAD_DB_ERROR:
-                p.alert("Database doesn't exist")
+                return "Database doesn't exist"
             elif error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                p.alert("Username or password is wrong")
+                return "Username or password is wrong"
             else:
-                p.alert(error, "Error")
+                return error
 
     def selectUser(self, CodigoContrato):
         cursor = self.db_connection.cursor()

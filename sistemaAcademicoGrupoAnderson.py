@@ -14,12 +14,12 @@ def reOpen():
     f = wmi.WMI()
     flag = 0
     for process in f.Win32_Process():
-        if "sistemaAcademico.exe" == process.Name:
+        if "sistemaAcademicoGrupoAnderson.exe" == process.Name:
             print("Application is Running")
             flag = 1
             break
     if flag == 0:
-        pathProgram = str(os.getcwd())+"sistemaAcademicoGrupoAnderson.exe"
+        pathProgram = str(os.getcwd())+"\\dist\\sistemaAcademicoGrupoAnderson.exe"
         print(pathProgram)
         os.system(pathProgram)
         print("Application is not Running")
@@ -31,22 +31,36 @@ class Logar:
         user = ui.login.text()
         senha = ui.senha.text()
         notificar= notify()
-        connect = connection()
-        found = connect.selectUser(CodigoContrato=user)
-        notificar.notificar(app_id="Sistema acadêmico", 
-        title="Informação importante!", 
-        msg="Aguarde enquanto buscamos suas informações no banco de dados.", 
-        icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
-        if(found):
+        try:
+            connect = connection()
+        except Exception as error:
+            notificar.notificar(app_id="Sistema acadêmico", 
+            title="Informação importante!",
+            msg="Não foi possível conectar-se ao banco de dados. Tente novamente!", icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
+            return
+        if(connect):
+            found = connect.selectUser(CodigoContrato=user)
             notificar.notificar(app_id="Sistema acadêmico", 
             title="Informação importante!", 
-            msg="Parabéns! O processo de autenticação começará em alguns instantes. Aguarde...", 
+            msg="Aguarde enquanto buscamos suas informações no banco de dados.", 
             icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
-            reOpen()
-            Logar.logon(user, senha)
-            connect.closedb()
+            if(found):
+                notificar.notificar(app_id="Sistema acadêmico", 
+                title="Informação importante!", 
+                msg="Parabéns! O processo de autenticação começará em alguns instantes. Aguarde...", 
+                icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
+                reOpen()
+                Logar.logon(user, senha)
+                connect.closedb()
+            else:
+                notificar.notificar(app_id="Sistema acadêmico", 
+                title="Informação importante!", 
+                msg="O usuário informado não foi encontrado.", 
+                icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
         else:
-            p.alert("O usuário não foi encontrado. Tente novamente!", "Usuário não encontrado!")
+            notificar.notificar(app_id="Sistema acadêmico", 
+            title="Informação importante!",
+            msg=connect, icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
 
     def logon(user, pwd):
 
