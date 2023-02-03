@@ -30,7 +30,8 @@ class Logar:
     def logar():
         user = ui.login.text()
         senha = ui.senha.text()
-        found = connection.selectUser(CodigoContrato=user)
+        connect = connection()
+        found = connect.selectUser(CodigoContrato=user)
         notificar= notify()
         notificar.notificar(app_id="Sistema acadêmico", 
         title="Informação importante!", 
@@ -43,6 +44,7 @@ class Logar:
             icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
             reOpen()
             Logar.logon(user, senha)
+            connect.closedb()
         else:
             p.alert("O usuário não foi encontrado. Tente novamente!", "Usuário não encontrado!")
 
