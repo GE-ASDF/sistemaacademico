@@ -30,12 +30,13 @@ class Logar:
     def logar():
         user = ui.login.text()
         senha = ui.senha.text()
+        found = connection.selectUser(CodigoContrato=user)
         notificar= notify()
         notificar.notificar(app_id="Sistema acadêmico", 
         title="Informação importante!", 
         msg="Aguarde enquanto buscamos suas informações no banco de dados.", 
         icon=os.getcwd()+"\\prepara-marca.png", duration="long").show()
-        if(user and senha):
+        if(found):
             notificar.notificar(app_id="Sistema acadêmico", 
             title="Informação importante!", 
             msg="Parabéns! O processo de autenticação começará em alguns instantes. Aguarde...", 
