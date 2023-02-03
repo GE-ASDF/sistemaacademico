@@ -18,7 +18,7 @@ class connection:
 
     def selectUser(self, CodigoContrato):
         cursor = self.db_connection.cursor()
-        query = "SELECT * FROM loginagendamentoaluno as L, pr_perfilalunos as P WHERE L.CodigoContrato = %s OR P.CodigoContrato = %s"
+        query = "SELECT * FROM usuarios WHERE L.LOGIN = %s OR P.CodigoContrato = %s"
         cursor.execute(query, (CodigoContrato,))
         return cursor.fetchone()
     
