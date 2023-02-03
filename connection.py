@@ -6,7 +6,7 @@ class connection:
 
     def __init__(self):
         try:
-            self.db_connection = mysql.connector.connect(host='192.168.1.10', user='prepcurso', password='ke7@ch%', database='preparaadm', port='3307')
+            self.db_connection = mysql.connector.connect(host='192.168.1.30', user='root', password='', database='ouromoderno', port='3306')
             self.db_connection
         except mysql.connector.Error as error:
             if error.errno == errorcode.ER_BAD_DB_ERROR:
