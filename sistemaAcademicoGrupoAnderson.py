@@ -30,9 +30,9 @@ class Logar:
     def logar():
         user = ui.login.text()
         senha = ui.senha.text()
+        notificar= notify()
         connect = connection()
         found = connect.selectUser(CodigoContrato=user)
-        notificar= notify()
         notificar.notificar(app_id="Sistema acadêmico", 
         title="Informação importante!", 
         msg="Aguarde enquanto buscamos suas informações no banco de dados.", 
